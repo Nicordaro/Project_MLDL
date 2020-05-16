@@ -3,11 +3,12 @@ import os
 import os.path
 import numpy as np
 import pickle
+import torch
 
 
 
-from .vision import VisionDataset
-from .utils import check_integrity, download_and_extract_archive
+# from .vision import VisionDataset
+# from .utils import check_integrity, download_and_extract_archive
 from torchvision.datasets import CIFAR100
 
 def pil_loader(f):
@@ -17,16 +18,16 @@ def pil_loader(f):
 
 
 class CIFAR100_tError():
-  def __init__(self, root, train=True, transform=None, traget_transform=None, download=False, lbls=[0:100]):
+  def __init__(self, root, train=True, transform=None, traget_transform=None, download=False, lbls=[]):
     self.prova = CIFAR100(self, root, train=True, transform=None, traget_transform=None, download=False)
     
     self.data = []
     self.labels = []
-      for element in self.prova:
-        image, label = element
-        if label in lbls:
-          self.data.append(image)
-          self.labels.append(label)
+    for element in self.prova:
+      image, label = element
+      if label in lbls:
+        self.data.append(image)
+        self.labels.append(label)
           
     def __getitem__(self, index):
         '''
