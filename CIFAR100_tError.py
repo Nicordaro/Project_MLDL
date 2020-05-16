@@ -18,9 +18,8 @@ def pil_loader(f):
 
 
 class CIFAR100_tError():
-  def __init__(self, root, train=True, transform=None, target_transform=None, download=False, lbls=[]):
-    flag = train
-    self.prova = CIFAR100(self, root, train=flag, transform=None, target_transform=None, download=False)
+  def __init__(self, root, train=True, transform=None, target_transform=None, download=False, lbls=[])
+    self.prova = CIFAR100(root, train=train, transform=None, target_transform=None, download=download)
     
     self.data = []
     self.labels = []
