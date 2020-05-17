@@ -4,6 +4,8 @@ import os.path
 import numpy as np
 import pickle
 import torch
+from sklearn import preprocessing
+
 
 from torchvision.datasets import VisionDataset
 
@@ -11,9 +13,11 @@ from torchvision.datasets import VisionDataset
 # from .utils import check_integrity, download_and_extract_archive
 from torchvision.datasets import CIFAR100
 
+
+
 def pil_loader(f):
     # open file
-    # img = Image.open(f)
+    #img = Image.open(f)
     return f.convert('RGB')
 
 
@@ -21,15 +25,18 @@ class CIFAR100_tError(CIFAR100):
 
   def __init__(self, root, train=True, transform=None,download=False, lbls=[]):
     flag = train
-    self.prova = CIFAR100(root, train=train, download=download)
+    self.labels_encoded =[]
+    self.prova = CIFAR100(root, train=flag, download=download)
     self.transform = transform
     self.data = []
     self.labels = []
+    le = preprocessing.LabelEncoder()
     for element in self.prova:
       image, label = element
       if label in lbls:
         self.data.append(image)
         self.labels.append(label)
+    self.labels_encoded = le.fit_transform(self.labels)
 
   def __len__(self):
         '''
@@ -50,7 +57,7 @@ class CIFAR100_tError(CIFAR100):
       '''
       
       image = pil_loader(self.data[index])
-      label = self.labels[index]
+      label = self.labels_encoded[index]
       
       if self.transform is not None:
           image = self.transform(image)
@@ -58,9 +65,11 @@ class CIFAR100_tError(CIFAR100):
       return image, label
     
   def increment(self, newlbls):
+    le = preprocessing.LabelEncoder()
     for element in self.prova:
       image, label = element
       if label in newlbls:
         self.data.append(image)
         self.labels.append(label)
+    self.labels_encoded = le.fit_transform(self.labels)
       
