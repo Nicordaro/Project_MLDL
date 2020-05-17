@@ -30,7 +30,7 @@ class CIFAR100_tError(CIFAR100):
 
     self.data = []
     self.labels = []
-    self.labels_encoded = []
+    self.encoded = []
 
     # le = preprocessing.LabelEncoder()
     # for element in self.prova:
@@ -59,7 +59,7 @@ class CIFAR100_tError(CIFAR100):
       '''
       
       image = pil_loader(self.data[index])
-      label = self.labels_encoded[index]
+      label = self.encoded[index]
       
       if self.transform is not None:
           image = self.transform(image)
@@ -73,5 +73,5 @@ class CIFAR100_tError(CIFAR100):
       if label in newlbls:
         self.data.append(image)
         self.labels.append(label)
-        self.labels_encoded.append(mapping[newlbls.index(label)])
+        self.encoded.append(mapping[newlbls.index(label)])
     #self.labels_encoded = le.fit_transform(self.labels)
