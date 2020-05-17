@@ -73,5 +73,5 @@ class CIFAR100_tError(CIFAR100):
       if label in newlbls:
         self.data.append(image)
         self.labels.append(label)
-        self.labels_encoded.append(mapping[newlbls.index(labels_encoded)])
+        self.labels_encoded.append(mapping[newlbls.index(label)])
     #self.labels_encoded = le.fit_transform(self.labels)
