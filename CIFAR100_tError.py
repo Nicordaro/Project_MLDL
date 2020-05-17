@@ -25,18 +25,20 @@ class CIFAR100_tError(CIFAR100):
 
   def __init__(self, root, train=True, transform=None,download=False, lbls=[]):
     flag = train
-    self.labels_encoded =[]
     self.prova = CIFAR100(root, train=flag, download=download)
     self.transform = transform
+
     self.data = []
     self.labels = []
-    le = preprocessing.LabelEncoder()
-    for element in self.prova:
-      image, label = element
-      if label in lbls:
-        self.data.append(image)
-        self.labels.append(label)
-    self.labels_encoded = le.fit_transform(self.labels)
+    self.labels_encoded =[]
+
+    # le = preprocessing.LabelEncoder()
+    # for element in self.prova:
+    #   image, label = element
+    #   if label in lbls:
+    #     self.data.append(image)
+    #     self.labels.append(label)
+    # self.labels_encoded = le.fit_transform(self.labels)
 
   def __len__(self):
         '''
@@ -64,12 +66,14 @@ class CIFAR100_tError(CIFAR100):
       
       return image, label
     
-  def increment(self, newlbls):
-    le = preprocessing.LabelEncoder()
+  def increment(self, newlbls, mapping):
+    #le = preprocessing.LabelEncoder()
     for element in self.prova:
       image, label = element
       if label in newlbls:
         self.data.append(image)
         self.labels.append(label)
-    self.labels_encoded = le.fit_transform(self.labels)
+        self.labels_encoded = mapping[newlbls.index(labels_encoded)]
+    #self.labels_encoded = le.fit_transform(self.labels)
+      
       
