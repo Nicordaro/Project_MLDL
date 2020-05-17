@@ -13,8 +13,8 @@ from torchvision.datasets import CIFAR100
 
 def pil_loader(f):
     # open file
-    img = Image.open(f)
-    return img.convert('RGB')
+    # img = Image.open(f)
+    return f.convert('RGB')
 
 
 class CIFAR100_tError(CIFAR100):
@@ -22,7 +22,7 @@ class CIFAR100_tError(CIFAR100):
   def __init__(self, root, train=True, transform=None,download=False, lbls=[]):
     flag = train
     self.prova = CIFAR100(root, train=train, download=download)
-    
+    self.transform = transform
     self.data = []
     self.labels = []
     for element in self.prova:
