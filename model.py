@@ -62,11 +62,11 @@ class Bottleneck(nn.Module):
         return out
 
 
-class Icarl_ResNet(nn.Module):
+class ResNet(nn.Module):
     def __init__(self,num_classes=10):
         block = BasicBlock
         num_blocks = [2, 2, 2, 2]
-        super(Icarl_ResNet, self).__init__()
+        super(ResNet, self).__init__()
         self.in_planes = 64
 
         self.conv1 = nn.Conv2d(3, 64, kernel_size=3,
