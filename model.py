@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
+from torchvision.models import resnet
 
 class BasicBlock(nn.Module):
     expansion = 1
@@ -66,7 +66,7 @@ class Icarl_ResNet(nn.Module):
     def __init__(self,num_classes=10):
         block = BasicBlock
         num_blocks = [2, 2, 2, 2]
-        super(ResNet, self).__init__()
+        super(Icarl_ResNet, self).__init__()
         self.in_planes = 64
 
         self.conv1 = nn.Conv2d(3, 64, kernel_size=3,
