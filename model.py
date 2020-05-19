@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torchvision.models import resnet
+
 
 class BasicBlock(nn.Module):
     expansion = 1
@@ -63,9 +63,7 @@ class Bottleneck(nn.Module):
 
 
 class ResNet(nn.Module):
-    def __init__(self,num_classes=10):
-        block = BasicBlock
-        num_blocks = [2, 2, 2, 2]
+    def __init__(self, block, num_blocks, num_classes=10):
         super(ResNet, self).__init__()
         self.in_planes = 64
 
@@ -96,4 +94,3 @@ class ResNet(nn.Module):
         out = out.view(out.size(0), -1)
         out = self.linear(out)
         return out
-
