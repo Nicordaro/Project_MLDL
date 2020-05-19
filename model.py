@@ -63,7 +63,7 @@ class Bottleneck(nn.Module):
 
 
 class Icarl_ResNet(nn.Module):
-    def __init__(self, block, num_blocks, num_classes=10):
+    def __init__(self,num_classes=10):
         block = BasicBlock
         num_blocks = [2, 2, 2, 2]
         super(ResNet, self).__init__()
