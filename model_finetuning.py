@@ -93,5 +93,7 @@ class ResNet(nn.Module):
         out = out.view(out.size(0), -1)
         out = self.linear(out)
         return out
+    
+# We use this function to initialize the net inside the .py
 def ResNet18():
     return ResNet(BasicBlock,[2,2,2,2],100)
