@@ -93,3 +93,5 @@ class ResNet(nn.Module):
         out = out.view(out.size(0), -1)
         out = self.linear(out)
         return out
+def ResNet18():
+    return ResNet(BasicBlock,[2,2,2,2],100)
