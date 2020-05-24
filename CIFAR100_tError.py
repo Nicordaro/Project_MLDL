@@ -77,3 +77,4 @@ class CIFAR100_tError(CIFAR100):
         self.data.append(image)
         self.labels.append(label)
         self.encoded.append(mapping[newlbls.index(label)])
+    return
