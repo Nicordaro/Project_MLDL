@@ -1,18 +1,14 @@
-from PIL import Image
 import os
 import os.path
 import numpy as np
 import pickle
 import torch
+
 from sklearn import preprocessing
-
-
+from PIL import Image
 from torchvision.datasets import VisionDataset
-
-
-# from .utils import check_integrity, download_and_extract_archive
 from torchvision.datasets import CIFAR100
-
+# from .utils import check_integrity, download_and_extract_archive
 
 
 def pil_loader(f):
@@ -22,23 +18,25 @@ def pil_loader(f):
 
 
 class CIFAR100_tError(CIFAR100):
+  """
+  This class implements some custom useful functions along with the original
+  CIFAR100 class functions
+  """
 
   def __init__(self, root, train=True, transform=None,download=False, lbls=[]):
+    """
+    When a dataset is created by mean of CIFAR100_tError all the images are in
+    self.prova
+    The actual dataset is self.data along with self.labels that start empty and
+    are populated by the function increment
+    """
     flag = train
     self.prova = CIFAR100(root, train=flag, download=download)
     self.transform = transform
-
     self.data = []
     self.labels = []
     self.encoded = []
 
-    # le = preprocessing.LabelEncoder()
-    # for element in self.prova:
-    #   image, label = element
-    #   if label in lbls:
-    #     self.data.append(image)
-    #     self.labels.append(label)
-    # self.labels_encoded = le.fit_transform(self.labels)
 
   def __len__(self):
         '''
@@ -66,12 +64,17 @@ class CIFAR100_tError(CIFAR100):
       
       return image, label
     
+
   def increment(self, newlbls, mapping):
-    #le = preprocessing.LabelEncoder()
+    """
+    This function accepts as arguments a list of labels (newlbls) whose corresponding images
+    are to be added to the dataset (self.data), and a mapping list (mapping) to remap
+    the labels 
+    """
     for element in self.prova:
       image, label = element
       if label in newlbls:
         self.data.append(image)
         self.labels.append(label)
         self.encoded.append(mapping[newlbls.index(label)])
-    #self.labels_encoded = le.fit_transform(self.labels)
+    return
