@@ -1,3 +1,6 @@
+import seaborn as sns
+import numpy as np
+
 def update_confusion_matrix(matrix, preds, datas):
     for pred, data in zip(preds,datas):
         matrix[data.item(),pred.item()] = matrix[data.item(),pred.item()]+1
