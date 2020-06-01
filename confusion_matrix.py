@@ -12,5 +12,5 @@ def new_confusion_matrix(lenx=100, leny=100):
 
 def show_confusion_matrix(matrix):
     fig, ax = plt.subplots(figsize=(15,9))
-    ax = sns.heatmap(matrix, linewidth=0.2,cmap='Reds')
+    ax = sns.heatmap(matrix, linewidth=0.2,cmap='Oranges')
     plt.show()
