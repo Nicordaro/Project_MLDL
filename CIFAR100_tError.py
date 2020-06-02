@@ -26,12 +26,12 @@ class CIFAR100_tError(CIFAR100):
   def __init__(self, root, train=True, transform=None,download=False, lbls=[]):
     """
     When a dataset is created by mean of CIFAR100_tError all the images are in
-    self.prova
+    self.dataset
     The actual dataset is self.data along with self.labels that start empty and
     are populated by the function increment
     """
     flag = train
-    self.prova = CIFAR100(root, train=flag, download=download)
+    self.dataset = CIFAR100(root, train=flag, download=download)
     self.transform = transform
     self.data = []
     self.labels = []
@@ -71,7 +71,7 @@ class CIFAR100_tError(CIFAR100):
     are to be added to the dataset (self.data), and a mapping list (mapping) to remap
     the labels 
     """
-    for element in self.prova:
+    for element in self.dataset:
       image, label = element
       if label in newlbls:
         self.data.append(image)
