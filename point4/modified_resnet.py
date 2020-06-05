@@ -64,7 +64,7 @@ class Bottleneck(nn.Module):
 
 
 class ResNet(nn.Module):
-    def __init__(self, block, num_blocks, num_classes=10):
+    def __init__(self, block, num_blocks, num_classes=100):
         super(ResNet, self).__init__()
         self.in_planes = 64
 
@@ -75,7 +75,7 @@ class ResNet(nn.Module):
         self.layer2 = self._make_layer(block, 128, num_blocks[1], stride=2)
         self.layer3 = self._make_layer(block, 256, num_blocks[2], stride=2)
         self.layer4 = self._make_layer(block, 512, num_blocks[3], stride=2)
-        #self.linear = nn.Linear(512*block.expansion, num_classes)
+        self.linear = CosineLinear(512 * block.expansion, num_classes) #(?)
 
     def _make_layer(self, block, planes, num_blocks, stride):
         strides = [stride] + [1]*(num_blocks-1)
@@ -93,8 +93,6 @@ class ResNet(nn.Module):
         out = self.layer4(out)
         out = F.avg_pool2d(out, 4)
         out = out.view(out.size(0), -1)
-
-        self.fc = CosineLinear(512 * block.expansion, num_classes) #(?)
 
         out = self.fc(out)
         return out
@@ -139,12 +137,6 @@ class CosineLinear(Module):
             self.sigma.data.fill_(1) #for initializaiton of sigma
 
     def forward(self, input):
-        #w_norm = self.weight.data.norm(dim=1, keepdim=True)
-        #w_norm = w_norm.expand_as(self.weight).add_(self.epsilon)
-        #x_norm = input.data.norm(dim=1, keepdim=True)
-        #x_norm = x_norm.expand_as(input).add_(self.epsilon)
-        #w = self.weight.div(w_norm)
-        #x = input.div(x_norm)
         out = F.linear(F.normalize(input, p=2,dim=1), \
                 F.normalize(self.weight, p=2, dim=1))
         if self.sigma is not None:
