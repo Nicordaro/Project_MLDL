@@ -2,7 +2,7 @@ from PIL import Image, ImageEnhance, ImageOps
 import numpy as np
 import random
 
-class CIFAR10Policy(object):
+class CIFAR100Policy(object):
     def __init__(self, fillcolor=(128, 128, 128)):
         self.policies = [
             SubPolicy(0.1, "invert", 7, 0.2, "contrast", 6, fillcolor),
